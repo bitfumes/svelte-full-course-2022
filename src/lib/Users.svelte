@@ -29,7 +29,7 @@
     },
   ];
 
-  let filteredUsers = users;
+  $: filteredUsers = users;
 
   const filter = ({ detail }) => {
     if (detail === "null") {
@@ -40,6 +40,10 @@
     const active = detail === "true";
     filteredUsers = users.filter((user) => user.active === active);
   };
+
+  const remove = ({ detail }) => {
+    users = users.filter((user) => user.id !== detail);
+  };
 </script>
 
 <div>
@@ -48,7 +52,7 @@
   <FilterUser on:filter={filter} />
 
   {#each filteredUsers as user, i (user.id)}
-    <User {user} {i} />
+    <User on:remove={remove} {user} {i} />
   {:else}
     <p>No user found</p>
   {/each}
