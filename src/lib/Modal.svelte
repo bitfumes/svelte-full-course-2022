@@ -2,6 +2,8 @@
   import { createEventDispatcher } from "svelte";
   const dispatch = createEventDispatcher();
 
+  export let show;
+
   function close() {
     dispatch("close");
   }
@@ -15,6 +17,7 @@
   class="relative z-10"
   aria-labelledby="modal-title"
   role="dialog"
+  style:display={show ? "block" : "none"}
   aria-modal="true"
 >
   <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
@@ -31,6 +34,7 @@
 
           <div class="flex justify-between">
             <button
+              type="button"
               class="px-2 py-1 bg-white border rounded hover:bg-gray-200"
               on:click={close}>Close</button
             >
