@@ -28,14 +28,37 @@
     },
   ];
 
-  const getUsers = () => {
-    return users;
+  let filteredUsers = users;
+
+  const filter = (e) => {
+    if (e.target.value === "null") {
+      filteredUsers = users;
+      return;
+    }
+
+    const active = e.target.value === "true";
+    filteredUsers = users.filter((user) => user.active === active);
   };
 </script>
 
 <div>
   <h1 class="text-2xl text-center mt-10">List of Users</h1>
-  {#each getUsers() as user, i (user.id)}
+
+  <div class="ml-4 mt-4">
+    <label for="user-filter">Filter User</label>
+    <select
+      on:change={filter}
+      name="user-filter"
+      id="user-filter"
+      class="border rounded-lg px-4 py-2 ml-4"
+    >
+      <option value={null}>All</option>
+      <option value={true}>Active</option>
+      <option value={false}>Inactive</option>
+    </select>
+  </div>
+
+  {#each filteredUsers as user, i (user.id)}
     <User {user} {i} />
   {:else}
     <p>No user found</p>
