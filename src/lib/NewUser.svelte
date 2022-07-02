@@ -1,6 +1,16 @@
 <script>
+  import { createEventDispatcher } from "svelte";
   import Modal from "./Modal.svelte";
-  let showModal = true;
+  const dispatch = createEventDispatcher();
+
+  let showModal = false;
+
+  let newUser = {};
+
+  function handleForm() {
+    dispatch("newUser", newUser);
+    showModal = false;
+  }
 </script>
 
 <div class="mt-4">
@@ -11,16 +21,24 @@
   >
 
   {#if showModal}
-    <Modal on:close={() => (showModal = false)}>
+    <Modal on:close={() => (showModal = false)} on:submit={handleForm}>
       <h1 class="text-2xl text-center">Create new user</h1>
       <div class="py-1 px-2 my-4">
         <label for="">Name</label>
-        <input type="text" class="px-2 py-1 w-full rounded border" />
+        <input
+          bind:value={newUser.name}
+          type="text"
+          class="px-2 py-1 w-full rounded border"
+        />
       </div>
 
       <div class="py-1 px-2 my-4">
         <label for="">Email</label>
-        <input type="email" class="px-2 py-1 w-full rounded border" />
+        <input
+          bind:value={newUser.email}
+          type="email"
+          class="px-2 py-1 w-full rounded border"
+        />
       </div>
 
       <div class="py-1 px-2 my-4 flex justify-between">
@@ -29,16 +47,18 @@
           <label for="true">Yes</label>
           <input
             type="radio"
-            value="true"
+            value={true}
             id="true"
+            bind:group={newUser.active}
             name="active"
             class="px-2 py-1 w-full rounded border mx-5"
           />
           <label for="false">No</label>
           <input
             type="radio"
-            value="false"
+            value={false}
             id="false"
+            bind:group={newUser.active}
             name="active"
             class="px-2 py-1 w-full rounded border mx-5"
           />

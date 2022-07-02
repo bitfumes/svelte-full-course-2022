@@ -5,6 +5,10 @@
   function close() {
     dispatch("close");
   }
+
+  function onSubmit() {
+    dispatch("submit");
+  }
 </script>
 
 <div
@@ -22,7 +26,7 @@
       <div
         class="relative bg-white rounded-lg px-4 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-sm sm:w-full sm:p-6"
       >
-        <form class="mt-5 sm:mt-6">
+        <form class="mt-5 sm:mt-6" on:submit|preventDefault={onSubmit}>
           <slot />
 
           <div class="flex justify-between">

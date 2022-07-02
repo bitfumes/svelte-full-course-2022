@@ -45,6 +45,17 @@
   const remove = ({ detail }) => {
     users = users.filter((user) => user.id !== detail);
   };
+
+  const add = ({ detail }) => {
+    users = [
+      {
+        id: users.length + 1,
+        image: user1,
+        ...detail,
+      },
+      ...users,
+    ];
+  };
 </script>
 
 <div>
@@ -53,7 +64,7 @@
   <div class="flex justify-between mx-4 items-center">
     <FilterUser on:filter={filter} />
 
-    <NewUser />
+    <NewUser on:newUser={add} />
   </div>
   {#each filteredUsers as user, i (user.id)}
     <User on:remove={remove} {user} {i} />
