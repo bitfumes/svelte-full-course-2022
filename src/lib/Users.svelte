@@ -5,38 +5,40 @@
 
   let users = [
     {
+      id: 1,
       image: user1,
       name: "John",
       email: "John@bitfumes.com",
     },
     {
+      id: 2,
       image: user2,
       name: "Jeni",
       email: "Jenie@bitfumes.com",
     },
     {
+      id: 3,
       image: user3,
       name: "Hacker",
       email: "hacker@bitfumes.com",
     },
   ];
+
+  const getUsers = () => {
+    return users;
+  };
 </script>
 
 <div>
   <h1>List of Users</h1>
-  <div>
-    <img src={users[0].image} alt={users[0].name} />
-    <p>{users[0].name}</p>
-    <p>{users[0].email}</p>
-  </div>
-  <div>
-    <img src={users[1].image} alt={users[1].name} />
-    <p>{users[1].name}</p>
-    <p>{users[1].email}</p>
-  </div>
-  <div>
-    <img src={users[2].image} alt={users[2].name} />
-    <p>{users[2].name}</p>
-    <p>{users[2].email}</p>
-  </div>
+  {#each getUsers() as { image, name, email, id }, i (id)}
+    <div>
+      <p>{i + 1}</p>
+      <img src={image} alt={name} />
+      <p>{name}</p>
+      <p>{email}</p>
+    </div>
+  {:else}
+    <p>No user found</p>
+  {/each}
 </div>
