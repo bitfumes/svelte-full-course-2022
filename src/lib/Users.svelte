@@ -1,6 +1,8 @@
 <script>
-  import user1 from "../assets/images/user1.png";
-  import { users } from "../store";
+  import { onMount } from "svelte";
+  import { cubicIn } from "svelte/easing";
+  import { tweened } from "svelte/motion";
+  import { add, remove, users } from "../store";
   import FilterUser from "./FilterUser.svelte";
   import NewUser from "./NewUser.svelte";
   import User from "./User.svelte";
@@ -17,20 +19,14 @@
     filteredUsers = $users.filter((user) => user.active === active);
   };
 
-  const remove = ({ detail }) => {
-    $users = $users.filter((user) => user.id !== detail);
-  };
+  const progress = tweened(0, {
+    duration: 1000,
+    easing: cubicIn,
+  });
 
-  const add = ({ detail }) => {
-    $users = [
-      {
-        id: $users.length + 1,
-        image: user1,
-        ...detail,
-      },
-      ...$users,
-    ];
-  };
+  onMount(() => {
+    progress.set(filteredUsers.length);
+  });
 </script>
 
 <div>
@@ -41,6 +37,9 @@
 
     <NewUser on:newUser={add} />
   </div>
+
+  <progress max="10" min="0" value={$progress} class="w-full mx-4" />
+
   {#each filteredUsers as user, i (user.id)}
     <User on:remove={remove} {user} {i} />
   {:else}
