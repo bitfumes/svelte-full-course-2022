@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
-  import { cubicIn } from "svelte/easing";
+  import { flip } from "svelte/animate";
+  import { cubicIn, quintOut } from "svelte/easing";
   import { tweened } from "svelte/motion";
   import { add, remove, users } from "../store";
   import FilterUser from "./FilterUser.svelte";
@@ -40,7 +41,9 @@
   <progress max="10" min="0" value={$progress} class="w-full mx-4" />
 
   {#each filteredUsers as user, i (user.id)}
-    <User on:remove={remove} {user} {i} />
+    <div animate:flip={{ delay: 250, duration: 1000, easing: quintOut }}>
+      <User on:remove={remove} {user} {i} />
+    </div>
   {:else}
     <p>No user found</p>
   {/each}
