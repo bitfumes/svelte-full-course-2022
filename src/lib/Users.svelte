@@ -1,59 +1,34 @@
 <script>
   import user1 from "../assets/images/user1.png";
-  import user2 from "../assets/images/user2.png";
-  import user3 from "../assets/images/user3.png";
+  import { users } from "../store";
   import FilterUser from "./FilterUser.svelte";
   import NewUser from "./NewUser.svelte";
   import User from "./User.svelte";
 
-  let users = [
-    {
-      id: 1,
-      image: user1,
-      name: "John",
-      email: "John@bitfumes.com",
-      active: false,
-    },
-    {
-      id: 2,
-      image: user2,
-      name: "Jeni",
-      email: "Jenie@bitfumes.com",
-      active: true,
-    },
-    {
-      id: 3,
-      image: user3,
-      name: "Hacker",
-      email: "hacker@bitfumes.com",
-      active: false,
-    },
-  ];
-
-  $: filteredUsers = users;
+  $: filteredUsers = $users;
 
   const filter = ({ detail }) => {
     if (detail === "null") {
-      filteredUsers = users;
+      filteredUsers = $users;
       return;
     }
 
     const active = detail === "true";
-    filteredUsers = users.filter((user) => user.active === active);
+    filteredUsers = $users.filter((user) => user.active === active);
   };
 
   const remove = ({ detail }) => {
-    users = users.filter((user) => user.id !== detail);
+    $users = $users.filter((user) => user.id !== detail);
   };
 
   const add = ({ detail }) => {
-    users = [
+    $users = [
       {
-        id: users.length + 1,
+        id: $users.length + 1,
         image: user1,
         ...detail,
       },
-      ...users,
+      ...$users,
     ];
   };
 </script>
