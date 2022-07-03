@@ -6,7 +6,6 @@
   import FilterUser from "./FilterUser.svelte";
   import NewUser from "./NewUser.svelte";
   import User from "./User.svelte";
-
   $: filteredUsers = $users;
 
   const filter = ({ detail }) => {

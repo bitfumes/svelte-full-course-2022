@@ -1,5 +1,6 @@
 <script>
   import { createEventDispatcher } from "svelte";
+  import { fly } from "svelte/transition";
   const dispatch = createEventDispatcher();
 
   export let user;
@@ -11,6 +12,7 @@
 </script>
 
 <div
+  transition:fly={{ duration: 1000, x: 200 }}
   class="flex m-5 bg-white border p-2 rounded-lg shadow-md hover:shadow-lg cursor-pointer items-center relative"
 >
   <button
